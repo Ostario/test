@@ -21,11 +21,14 @@ jobs:
       - run:
           name: "Say hello again"
           command: "echo Hello again, World!"
-
+  release-my-service:
+        type: release
+        plan_name: my-service-release
 workflows:
   say-hello-workflow:
     jobs:
       - say-hello
+      - release-my-service
       - say-hello-again:
           requires:
             - say-hello
