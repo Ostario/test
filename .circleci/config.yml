@@ -9,6 +9,9 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+      - run:
+          name: "Run CircleCI release log"
+          command: "circleci run release log --environment-name=log-env --component-name=some-component --target-version=1.0"
 
   say-hello-again:
     docker:
