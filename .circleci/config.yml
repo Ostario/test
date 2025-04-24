@@ -1,0 +1,34 @@
+version: 2.1
+
+jobs:
+  say-hello:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - checkout
+      - run:
+          name: "Say hello"
+          command: "echo Hello, World!"
+      - run:
+          name: "Run CircleCI release log"
+          command: "circleci run release log --environment-name=log-env --component-name=some-component --target-version=1.0"
+
+  say-hello-again:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - checkout
+      - run:
+          name: "Say hello again"
+          command: "echo Hello again, World!"
+  release-my-service:
+        type: release
+        plan_name: my-service-release
+workflows:
+  say-hello-workflow:
+    jobs:
+      - say-hello
+      - release-my-service
+      - say-hello-again:
+          requires:
+            - say-hello
